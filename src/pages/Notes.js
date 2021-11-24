@@ -10,8 +10,8 @@ export default function Notes({ notes, removeNote }) {
   if (notes.length === 0) {
     return (
       <Container>
-        <Typography variant='h1' sx={{ textAlign: 'center' }}>
-          No Notes ..
+        <Typography variant='h3' sx={{ textAlign: 'center' }}>
+          No Notes
         </Typography>
         <Button
           sx={{ margin: ' 0 auto', display: 'block', marginTop: '50px' }}
