@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     display: 'block !important',
   },
 });
-export default function Create() {
+export default function Create({ addNote }) {
   const classes = useStyles();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -39,15 +39,8 @@ export default function Create() {
       setDescriptionError(true);
     }
     if (title && description) {
-      fetch('http://localhost:8000/notes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title, description, category }),
-      }).then(() => {
-        history.push('/');
-      });
+      addNote(title, description, category, new Date().valueOf());
+      history.push('/');
     }
   };
   return (

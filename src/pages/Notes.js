@@ -1,28 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Grid } from '@mui/material';
+import React from 'react';
+import { Container, Grid, Typography, Button } from '@mui/material';
 import NoteCard from '../components/NoteCard';
-export default function Notes() {
-  const [notes, setNotes] = useState([]);
-  useEffect(() => {
-    fetch('http://localhost:8000/notes')
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setNotes(data.reverse());
-      });
-  }, []);
-  const deleteNote = (id) => {
-    const oldNotes = notes;
-    setNotes(notes.filter((note) => note.id !== id));
-    fetch('http://localhost:8000/notes/' + id, { method: 'DELETE' });
-  };
+import { useHistory } from 'react-router';
+export default function Notes({ notes, removeNote }) {
+  const history = useHistory();
+  notes.sort((a, b) => {
+    return b.id - a.id;
+  });
+  if (notes.length === 0) {
+    return (
+      <Container>
+        <Typography variant='h1' sx={{ textAlign: 'center' }}>
+          No Notes ..
+        </Typography>
+        <Button
+          sx={{ margin: ' 0 auto', display: 'block', marginTop: '50px' }}
+          variant='contained'
+          onClick={() => {
+            history.push('/create');
+          }}
+        >
+          ADD SOME
+        </Button>
+      </Container>
+    );
+  }
   return (
     <Container>
       <Grid container spacing={3}>
         {notes.map((note) => (
           <Grid item key={note.id} xs={12} md={6} lg={4}>
-            <NoteCard note={note} deleteNote={deleteNote} />
+            <NoteCard note={note} deleteNote={removeNote} />
           </Grid>
         ))}
       </Grid>

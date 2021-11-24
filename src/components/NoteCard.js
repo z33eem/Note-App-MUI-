@@ -9,7 +9,7 @@ import {
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 const NoteCard = ({ note, deleteNote }) => {
   return (
-    <Card>
+    <Card elevation={3}>
       <CardHeader
         action={
           <IconButton
